@@ -26,6 +26,12 @@
 #     `nm -D ... | grep rust_mork` decided nothing because its exit status
 #     was discarded.
 #   - it runs the same from any working directory.
+#   - morklib.so is published by rename through tools/link.sh, so an engine
+#     booting while this relinks it, which every gate run does, opens a whole
+#     object; linked in place, a boot beside it read "morklib.so: file too
+#     short" [source 2026-09-26T17:51:25+10:00:
+#     docs/journal/2026-09-06-algebra-rows-die-with-their-space.md:299-305]
+#     [tested 2026-09-26T17:51:21+10:00: tests/shell/test_builds_publish_by_rename.sh].
 # Fails when:
 #   - any prerequisite is absent: all of them are named at once, so a fresh
 #     machine learns the whole list in one run rather than one per attempt.
@@ -106,6 +112,6 @@ if ! nm -D ./target/release/libmork_ffi.so | grep -q ' rust_mork$'; then
     exit 1
 fi
 
-bounded swipl-ld -shared -o morklib.so mork.c
+bounded sh "$HERE/../../../tools/link.sh" morklib.so -shared mork.c
 
 echo "Successfully built mork_ffi"

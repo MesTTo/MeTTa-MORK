@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- `mork_ffi/build.sh` publishes `morklib.so` by rename through the
+  superproject's `tools/link.sh`, so an engine loading it while a gate relinks
+  it opens a whole object; linked in place it read a partial one.
+
 - Re-pin twenty-four instruction rows to the swipl the measurement names.
   Since 310b6a9a2 metta-benchmarking counts the swipl on the measurement's
   PATH, the patched build, where it counted the stock swipl that perf's own
