@@ -32,6 +32,11 @@
 #     short" [source 2026-09-26T17:51:25+10:00:
 #     docs/journal/2026-09-06-algebra-rows-die-with-their-space.md:299-305]
 #     [tested 2026-09-26T17:51:21+10:00: tests/shell/test_builds_publish_by_rename.sh].
+#   - the crate builds on every processor only inside a run that holds the
+#     machine's full-width lock, and one below one lane's share otherwise, so
+#     a stale crate rebuilt for a light run never occupies the machine and
+#     never refuses the run either (tools/full_width.sh, metta_full_width_room)
+#     [tested 2026-09-27T02:16:38+10:00: tests/checks/check_full_width_selftest.py].
 # Fails when:
 #   - any prerequisite is absent: all of them are named at once, so a fresh
 #     machine learns the whole list in one run rather than one per attempt.
@@ -100,7 +105,8 @@ fi
 # one inside its quotes, so the old prefix pattern stopped there and the line
 # matched nothing at all.
 RUSTFLAGS="-C target-cpu=native" TMPDIR="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}" \
-    bounded cargo +nightly build -p mork_ffi --release
+    bounded cargo +nightly build -p mork_ffi --release \
+        --jobs "$(bounded sh "$HERE/../../../tools/full_width.sh" room)"
 
 # The engine reaches this library through exactly one entry point, so its
 # absence means the crate built into something the backend cannot call. Checked

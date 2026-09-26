@@ -5,6 +5,10 @@
 - The `mork-bench` lane is declared `full_width`, so the superproject's gate
   claims the machine's full-width lock before it runs it: its rows are
   instruction counts, which another full-width run beside it would disturb.
+  The bench claims the lock itself before it measures, so a run by hand does
+  too, and `mork_ffi/build.sh` gives cargo every processor only inside a run
+  that holds the lock and one below one lane's share otherwise, so a stale
+  crate rebuilt for a light run neither occupies the machine nor refuses it.
 
 - `mork_ffi/build.sh` publishes `morklib.so` by rename through the
   superproject's `tools/link.sh`, so an engine loading it while a gate relinks

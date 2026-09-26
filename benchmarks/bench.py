@@ -86,6 +86,9 @@ BASELINE = SEAT / "benchmarks" / "baseline.json"
 # of its own under that seat's ext/, so the entry only makes _workspace
 # reachable and on_path() puts every member beside it.
 sys.path.insert(0, str(ROOT / "extensions" / "python"))
+sys.path.append(str(ROOT / "tests" / "checks"))
+
+import full_width  # noqa: E402  -- the workspace's width rule, on the path above
 
 from _workspace import on_path  # noqa: E402  -- the path entry above
 
@@ -512,6 +515,8 @@ def main(argv: list[str] | None = None) -> int:
     if arguments.update and arguments.conjunction_sweep:
         parser.error("--conjunction-sweep cannot update the complete benchmark baseline")
 
+    # Every row is retired instructions, a load-sensitive reading (tools/full_width.sh).
+    full_width.invocation("measures")
     # What else the box was doing, recorded with every run rather than
     # remembered: instructions:u is far steadier than wall clock but the two
     # noisiest rows here are the native-space ones, and a reader comparing two
