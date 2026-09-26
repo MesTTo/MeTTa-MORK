@@ -59,6 +59,7 @@ run GATE mork-seat check_mork_seat
 check_mork_bench() {
     bounded sh "$HERE/extensions/mork/bench.sh"
 }
+full_width mork-bench
 run_solo GATE mork-bench check_mork_bench
 
 # The seat's Python, which the root ruff lane does not reach: it runs
