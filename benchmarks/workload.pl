@@ -8,8 +8,9 @@
 %     than measuring a boot.
 %   - in the `window` phase, perf's control and acknowledgement pipes arrive as
 %     METTA_PERF_CONTROL_FD and METTA_PERF_ACK_FD
-%     [source: ext/metta-benchmarking/metta_benchmarking.py, measure_instructions'
-%     controlled=True branch].
+%     [source 2026-09-29T03:45:34+10:00:
+%     ext/metta-benchmarking/metta_benchmarking/__init__.py,
+%     measure_instructions' controlled=True branch].
 % Guarantees:
 %   - each acknowledgement consumes and validates the complete perf frame,
 %     including its terminating NUL
