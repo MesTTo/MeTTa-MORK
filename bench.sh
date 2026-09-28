@@ -41,8 +41,12 @@ export TMPDIR
 # five whole-gate runs while another session held the PMU, and node-bench did
 # the same on 2026-09-20 in a battery with no node_modules; a benchmark that
 # cannot see is indistinguishable from a passing one until this word is used.
+# These checks are the runner's only road to 125, each saying SKIPPED with
+# what is absent: a failure after them, the driver's own or a refused claim on
+# the machine, exits nonzero, and the driver's refused measurement window is
+# metta_benchmarking's own declared skip.
 unmeasured() {
-    echo "note: $*" >&2
+    echo "SKIPPED: $*" >&2
     exit 125
 }
 

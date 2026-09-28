@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- `bench.sh`'s prerequisite checks and the mork-lint lane's say `SKIPPED:`
+  naming what is absent, the only road to 125 in this seat's lanes, which
+  the superproject's gate reads as a skip and nothing else.
 - The `mork-bench` lane is declared `full_width`, so the superproject's gate
   claims the machine's full-width lock before it runs it: its rows are
   instruction counts, which another full-width run beside it would disturb.

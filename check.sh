@@ -74,7 +74,7 @@ check_mork_lint() {
     # nothing about the tree, which the gate reports as `skipped` and names
     # under MEASURED NOTHING.
     [ -f "$HERE/extensions/python/pyproject.toml" ] || {
-        echo "note: extensions/python/pyproject.toml is absent, so there is no \
+        echo "SKIPPED: extensions/python/pyproject.toml is absent, so there is no \
 house style to lint this seat's Python against" >&2
         return 125
     }
